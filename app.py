@@ -78,6 +78,8 @@ def eventhandler(data, event_type):
             
             # from callconnection of result above, play media to all participants
             my_file = FileSource(url="https://github.com/cerebricks/azure_webapp_iptest/raw/refs/heads/main/elevator.wav")
+            print("got the file")
+            print(my_file)
             
             try:
                 call_connection.play_media_to_all(my_file)
