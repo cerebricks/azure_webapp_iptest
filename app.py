@@ -24,7 +24,9 @@ def webhook():
     except Exception as e:
         return f"Error parsing json: {e}", 500
     print(payload)
-    return (payload, 200, None)
+    validation_code = payload['data']['validationCode']
+    
+    return jsonify({'validationResponse': validation_code})
     
 
 if __name__ == "__main__":
