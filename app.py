@@ -77,9 +77,6 @@ def eventhandler(data, event_type):
             call_connection = client.get_call_connection(call_connection_id)
             
             # from callconnection of result above, play media to all participants
-            my_file = FileSource(url="https://sndup.net/rqvpp/d")
-            print("got the file")
-            print(my_file)
             
             try:
                 my_file = FileSource(url="https://sndup.net/rqvpp/d")
@@ -88,14 +85,8 @@ def eventhandler(data, event_type):
                 call_connection.play_media_to_all(my_file)
             except Exception as e:
                 print(e)
-            try:
-                my_file = FileSource(url="https://dl.sndup.net/rqvpp/elevator%20(1).wav")
-                print("got the file")
-                print(my_file)
-                call_connection.play_media_to_all(my_file)
-            except Exception as e:
-                print(e)
-            time.sleep(3)
+            time.sleep(20)
+            call_connection.cancel_all_media_operations()
             call_connection.hang_up
             return jsonify({'response': '200'}), 200
             #https://github.com/microsoft/call-center-ai/blob/main/public/loading.wav
