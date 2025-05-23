@@ -27,7 +27,8 @@ def webhook():
     except Exception as e:
         return f"Error parsing json: {e}", 500
     print(payload)
-    validation_code = payload[0]['data']['validationCode']
+    #TODO: Clean up this mess. Write Handling for validation and event 
+    #validation_code = payload[0]['data']['validationCode']
     
     for event in payload:
         # Event-Informationen auslesen
