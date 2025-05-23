@@ -3,6 +3,16 @@ import requests, jsonify
 
 app = Flask(__name__)
 
+def parse_request(req):
+"""
+Parses application/json request body data into a Python dictionary
+"""
+    payload = req.get_data()
+    payload = unquote_plus(payload)
+    payload = re.sub('payload=', '', payload)
+    payload = json.loads(payload)
+    return payload
+
 @app.route("/")
 def home():
     return "Hello from Azure Web App!"
@@ -18,12 +28,11 @@ def get_my_ip():
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    # Empfange die Daten vom Webhook
-    data = request.json
-    print("Received data:", data)
+    payload = parse_request(request)
+    print payload['p']
 
-    # Antwort an den Webhook
-    return jsonify({"status": "success"}), 200
+    return (payload, 200, None)
+    
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8000)
