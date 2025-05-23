@@ -31,7 +31,7 @@ def get_my_ip():
 @app.route('/webhook', methods=['POST'])
 def webhook():
     payload = parse_request(request)
-    print payload['p']
+    print(payload)
 
     return (payload, 200, None)
     
