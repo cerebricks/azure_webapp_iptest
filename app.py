@@ -32,7 +32,6 @@ def get_my_ip():
 def webhook():
     payload = parse_request(request)
     print(payload)
-
     return (payload, 200, None)
     
 
