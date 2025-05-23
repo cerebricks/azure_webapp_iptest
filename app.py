@@ -40,12 +40,9 @@ def webhook():
 
         # Daten für 'to' und 'from' extrahieren
         data = event.get("data", {})
-        to_details = data.get("to", {}).get("phoneNumber", {}).get("value", "Unbekannt")
-        from_details = data.get("from", {}).get("phoneNumber", {}).get("value", "Unbekannt")
-        correlation_id = data.get("correlationId", "Unbekannt")
-        eventhandler(data, event_type)
+        response = eventhandler(data, event_type)
     
-    return jsonify({'validationResponse': validation_code})
+    return response
 
 
 def eventhandler(data, event_type):
@@ -58,8 +55,14 @@ def eventhandler(data, event_type):
     match event_type:
         case 'Microsoft.Communication.IncomingCall':
             # Your unique Azure Communication service endpoint
+            to_details = data.get("to", {}).get("phoneNumber", {}).get("value", "Unbekannt")
+            from_details = data.get("from", {}).get("phoneNumber", {}).get("value", "Unbekannt")
+            correlation_id = data.get("correlationId", "Unbekannt")
             call_connection_properties = client.answer_call(incoming_call_context, callback_url)
             print(call_connection_properties)
+        case 'Microsoft.EventGrid.SubscriptionValidationEvent'
+            validation_code = payload['validationCode']
+            return jsonify({'validationResponse': validation_code})
         case _:
             return
 
