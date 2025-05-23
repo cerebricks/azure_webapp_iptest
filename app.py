@@ -70,7 +70,7 @@ def eventhandler(data, event_type):
             # using call connection id, get call connection
             
             print(call_connection_properties)
-            return jsonify({'response': '200'})
+            return jsonify({'response': '200'}), 200
         case 'Microsoft.Communication.CallConnected':
             print("Call Connected")
             call_connection_id = data['callConnectionId']
@@ -85,14 +85,15 @@ def eventhandler(data, event_type):
                 print(e)
             time.sleep(3)
             call_connection.hang_up
+            return jsonify({'response': '200'}), 200
             #https://github.com/microsoft/call-center-ai/blob/main/public/loading.wav
         case 'Microsoft.EventGrid.SubscriptionValidationEvent':
             validation_code = payload['validationCode']
-            return jsonify({'validationResponse': validation_code})
+            return jsonify({'validationResponse': validation_code}), 200
         case 'Microsoft.Communication.CallDisconnected':
-            return jsonify({'response': '500', 'event_type': event_type })
+            return jsonify({'response': '500', 'event_type': event_type }), 200
         case _:
-            return jsonify({'response': '500','event_type': event_type})
+            return jsonify({'response': '500','event_type': event_type}), 200
 
 
 if __name__ == "__main__":
