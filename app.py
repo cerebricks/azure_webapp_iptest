@@ -24,10 +24,11 @@ def webhook():
     except Exception as e:
         return f"Error parsing json: {e}", 500
     print(payload)
-    validation_code = payload['data']['validationCode']
+    validation_code = payload[0]['data']['validationCode']
     
     return jsonify({'validationResponse': validation_code})
     
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8000)
+
