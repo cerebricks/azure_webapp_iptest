@@ -57,11 +57,12 @@ def eventhandler(data, event_type):
     credential = AzureKeyCredential(os.getenv("CommunicationKey"))
     client = CallAutomationClient(endpoint_url, credential)
     callback_url = os.getenv("callBackUrl")
-    incoming_call_context = data['incomingCallContext']
            
     match event_type:
         case 'Microsoft.Communication.IncomingCall':
             # Your unique Azure Communication service endpoint
+            print("Incoming Connected")
+            incoming_call_context = data['incomingCallContext']
             to_details = data.get("to", {}).get("phoneNumber", {}).get("value", "Unbekannt")
             from_details = data.get("from", {}).get("phoneNumber", {}).get("value", "Unbekannt")
             correlation_id = data.get("correlationId", "Unbekannt")
@@ -71,6 +72,7 @@ def eventhandler(data, event_type):
             print(call_connection_properties)
             return jsonify({'response': '200'})
         case 'Microsoft.Communication.CallConnected':
+            print("Call Connected")
             call_connection_id = data['callConnectionId']
             call_connection = client.get_call_connection(call_connection_id)
             
