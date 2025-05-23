@@ -60,7 +60,7 @@ def eventhandler(data, event_type):
             correlation_id = data.get("correlationId", "Unbekannt")
             call_connection_properties = client.answer_call(incoming_call_context, callback_url)
             print(call_connection_properties)
-        case 'Microsoft.EventGrid.SubscriptionValidationEvent'
+        case 'Microsoft.EventGrid.SubscriptionValidationEvent':
             validation_code = payload['validationCode']
             return jsonify({'validationResponse': validation_code})
         case _:
