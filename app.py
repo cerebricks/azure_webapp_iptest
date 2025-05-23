@@ -32,11 +32,18 @@ def webhook():
     
     for event in payload:
         # Event-Informationen auslesen
-        event_id = event["id"]
-        event_type = event["eventType"]
-        event_time = event["eventTime"]
-        subject = event["subject"]
-        topic = event["topic"]
+        try:
+            event_id = event["id"]
+            event_type = event["eventType"]
+            event_time = event["eventTime"]
+            subject = event["subject"]
+            topic = event["topic"]
+        except Exception as e:
+            print(e)
+            event_id = event["id"]
+            event_type = event["type"]
+            event_time = event["time"]
+            subject = event["subject"]
 
         # Daten für 'to' und 'from' extrahieren
         data = event.get("data", {})
