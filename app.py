@@ -1,19 +1,8 @@
 from flask import Flask, request
 import requests, jsonify
-from urllib import unquote_plus
-import json, re
+import json
 
 app = Flask(__name__)
-
-def parse_request(req):
-    """
-    Parses application/json request body data into a Python dictionary
-    """
-    payload = req.get_data()
-    payload = unquote_plus(payload)
-    payload = re.sub('payload=', '', payload)
-    payload = json.loads(payload)
-    return payload
 
 @app.route("/")
 def home():
@@ -30,7 +19,12 @@ def get_my_ip():
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    payload = parse_request(request)
+    payload = request.get_data()
+    print(payload)
+    try:
+        payload = json.loads(payload)
+    except Exception as e:
+        return f"Error parsing json: {e}", 500
     print(payload)
     return (payload, 200, None)
     
