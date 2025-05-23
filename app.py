@@ -87,7 +87,7 @@ def eventhandler(data, event_type):
                 print(e)
             time.sleep(20)
             call_connection.cancel_all_media_operations()
-            call_connection.hang_up()
+            call_connection.hang_up(is_for_everyone=True)
             return jsonify({'response': '200'}), 200
             #https://github.com/microsoft/call-center-ai/blob/main/public/loading.wav
         case 'Microsoft.EventGrid.SubscriptionValidationEvent':
