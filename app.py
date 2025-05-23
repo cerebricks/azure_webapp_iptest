@@ -6,9 +6,9 @@ import json, re
 app = Flask(__name__)
 
 def parse_request(req):
-"""
-Parses application/json request body data into a Python dictionary
-"""
+    """
+    Parses application/json request body data into a Python dictionary
+    """
     payload = req.get_data()
     payload = unquote_plus(payload)
     payload = re.sub('payload=', '', payload)
